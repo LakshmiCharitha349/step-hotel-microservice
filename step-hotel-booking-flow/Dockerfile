@@ -7,7 +7,7 @@ COPY deno.json* deno.lock* ./
 COPY . .
 
 RUN deno cache main.ts
-EXPOSE 3000
+EXPOSE 8000
 
 
 CMD ["deno", "-A", "main.ts"]
