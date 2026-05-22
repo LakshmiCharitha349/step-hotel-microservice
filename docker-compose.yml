@@ -1,0 +1,77 @@
+version: "3.9"
+
+services:
+  nginx:
+    image: nginx:latest
+    container_name: hotel-nginx
+    ports:
+      - "80:80"
+    volumes:
+      - .nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - authflow
+      - bookingflow
+      - searchflow
+    networks:
+      - hotel-network
+
+  authflow:
+    build:
+      context: ./step-hotel-auth-flow
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 1
+    environment:
+      JWT_SECRET: ${JWT_SECRET}
+      HOTEL_MONGO_URI: mongodb://mongo:27017/hotel_auth_db
+    depends_on:
+      - mongo
+    networks:
+      - hotel-network
+
+  bookingflow:
+    build:
+      context: ./step-hotel-booking-flow
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 2
+    environment:
+      MONGO_URL: mongodb://mongo:27017/booking_db
+      JWT_SECRET: ${JWT_SECRET}
+      SEARCH_URL: http://searchflow:3000/api/search/allocate-rooms
+      PORT: 3000
+    depends_on:
+      - mongo
+      - searchflow
+    networks:
+      - hotel-network
+
+  searchflow:
+    build:
+      context: ./step-hotel-search-flow
+      dockerfile: Dockerfile
+    deploy:
+      replicas: 3
+    environment:
+      MONGO_URL: mongodb://mongo:27017/search_db
+    depends_on:
+      - mongo
+    networks:
+      - hotel-network
+
+  mongo:
+    image: mongo:8
+    container_name: hotel-mongo
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongo-data:/data/db
+    networks:
+      - hotel-network
+
+volumes:
+  mongo-data:
+
+networks:
+  hotel-network:
+    driver: bridge

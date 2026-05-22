@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: hotel
+  mongodb:
+    uri: ${HOTEL_MONGO_URI:mongodb://localhost:27017/hoteldb}
+    auto-index-creation: false
+    connection-pool:
+      max-size: 200
+      min-size: 20
+      max-wait-time: 2000ms
+      max-connection-life-time: 30m
+
+security:
+  jwt:
+    secret-key: ${JWT_SECRET}
+    expiration-time: 3600000
+
+server:
+  tomcat:
+    threads:
+      max: 400
+      min-spare: 50
+    accept-count: 200
