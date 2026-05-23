@@ -28,7 +28,7 @@ export class SearchHotelsRepo {
 
     console.log("Cached Miss");
     const hotel = await this.#hotels.find({ city: searchedcity }).toArray()
-    if (hotel.length) setValueToRedis(searchedcity, JSON.stringify(hotel))
+    setValueToRedis(searchedcity, JSON.stringify(hotel))
     return hotel;
   }
 
