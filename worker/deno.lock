@@ -3,7 +3,6 @@
   "specifiers": {
     "jsr:@std/assert@1": "1.0.19",
     "jsr:@std/internal@^1.0.12": "1.0.12",
-    "npm:hono@^4.12.22": "4.12.22",
     "npm:mongodb@^7.2.0": "7.2.0",
     "npm:redis@^5.12.1": "5.12.1"
   },
@@ -70,9 +69,6 @@
     "cluster-key-slot@1.1.2": {
       "integrity": "sha512-RMr0FhtfXemyinomL4hrWcYJxmX6deFdCxpJzhDttxgO1+bcCnkk+9drydLVDmAMG7NE6aN/fl4F7ucU/90gAA=="
     },
-    "hono@4.12.22": {
-      "integrity": "sha512-7fvVPbB92zNRsQke+uiRGwtTuef0tB2Dg4hWxYfFNvkQhIltWoyi0ONReM5LWA+jJWS3nfT5lTq+qbsIpX0IQw=="
-    },
     "memory-pager@1.5.0": {
       "integrity": "sha512-ZS4Bp4r/Zoeq6+NLJpP+0Zzm0pR8whtGPf1XExKLJBAczGMnSi3It14OiNCStjQjM6NU1okjQGSxgEZN8eBYKg=="
     },
@@ -130,7 +126,6 @@
   "workspace": {
     "dependencies": [
       "jsr:@std/assert@1",
-      "npm:hono@^4.12.22",
       "npm:mongodb@^7.2.0",
       "npm:redis@^5.12.1"
     ]
