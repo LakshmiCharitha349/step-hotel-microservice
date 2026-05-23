@@ -72,9 +72,11 @@ services:
     deploy:
       replicas: 3
     environment:
+      REDIS_URL: 'redis://redis:6379'
       MONGO_URL: mongodb://mongo:27017/search_db
     depends_on:
       - mongo
+      - redis
     networks:
       - hotel-network
 
@@ -94,11 +96,14 @@ services:
     ports:
       - "6380:6379"
     restart: always
+    volumes:
+      - redis-data:/data
     networks:
       - hotel-network
 
 volumes:
   mongo-data:
+  redis-data:
 
 networks:
   hotel-network:
