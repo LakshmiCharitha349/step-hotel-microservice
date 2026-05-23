@@ -16,7 +16,7 @@ const main = async () => {
   const db = await createMongoDb();
   const bookingsRepo = new BookingsRepo(db);
   const app = createApp(bookingsRepo);
-  const PORT = Deno.env.get("PORT") || "8000";
+  const PORT = Deno.env.get("PORT") || "3000";
   Deno.serve({port : +PORT }, app.fetch);
 }
 

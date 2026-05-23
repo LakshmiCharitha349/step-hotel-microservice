@@ -16,7 +16,7 @@ const main = () => {
   const hotels = createDb();
   const searchService = new SearchHotelsRepo(hotels);
   const app = createApp(searchService);
-  Deno.serve(app.fetch, { port : 8000 });
+  Deno.serve({port : 3000},app.fetch);
 }
 
 main();

@@ -16,7 +16,7 @@ const getUserId = async (context : Context) => {
     jwtSecret,
     'HS512'
   )).sub
-
+  
 }
 
 export const bookingHandler = async (context:Context) => {
