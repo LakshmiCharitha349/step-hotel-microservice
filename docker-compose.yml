@@ -38,6 +38,7 @@ services:
     environment:
       REDIS_URL: 'redis://redis:6379'
       MONGO_URL: mongodb://mongo:27017/booking_db
+      UPDATESTATUS_URL: http://bookingflow:3000/api/bookings/update-status/
     depends_on:
       - redis
       - mongo
@@ -50,7 +51,7 @@ services:
       context: ./step-hotel-booking-flow
       dockerfile: Dockerfile
     deploy:
-      replicas: 2
+      replicas: 1
     environment:
       REDIS_URL: 'redis://redis:6379'
       MONGO_URL: mongodb://mongo:27017/booking_db
@@ -70,7 +71,7 @@ services:
       context: ./step-hotel-search-flow
       dockerfile: Dockerfile
     deploy:
-      replicas: 3
+      replicas: 4
     environment:
       REDIS_URL: 'redis://redis:6379'
       MONGO_URL: mongodb://mongo:27017/search_db

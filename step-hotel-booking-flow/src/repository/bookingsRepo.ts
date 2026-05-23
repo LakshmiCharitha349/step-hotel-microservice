@@ -15,7 +15,6 @@ export class BookingsRepo {
   }
 
   async bookHotel(userId: string, hotel_id: string, rooms: number) {
-    console.log("userid :: " + userId);
     const newBooking = { userId, hotel_id, rooms, reciept_status: "Pending" };
     const search_url = Deno.env.get("SEARCH_URL");
 
@@ -43,6 +42,10 @@ export class BookingsRepo {
 
   async getPdf(id: string) {
     return await this.#bookings.findOne({ _id: new ObjectId(id) });
+  }
+
+  async updateBookingStatus(id:string) {
+    return (await this.#bookings.updateOne({ _id: new ObjectId(id) }, { $set: { reciept_status: "generated" } })).modifiedCount;
   }
 
 }

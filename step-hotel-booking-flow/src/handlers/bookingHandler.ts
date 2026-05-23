@@ -1,13 +1,13 @@
 import { verify } from "hono/jwt";
 import { Context } from "node:vm";
 import { pushUpdateStatus as pushUpdateStatus } from "./redis_client.ts";
+import { Context } from "hono";
 
 const getUserId = async (context: Context) => {
   const token = context.req.header("Authorization").split(" ")[1];
 
   const jwtSecret = Deno.env.get("JWT_SECRET");
 
-  console.log("jwt secre" + jwtSecret);
   if (!jwtSecret) {
     return false;
   }
@@ -26,7 +26,6 @@ export const bookingHandler = async (context: Context) => {
   const bookingsRepo = context.get("bookingsRepo");
   const userId = await getUserId(context);
 
-  console.log("jwt user ::" + userId);
   if (!userId) {
     return context.json({ success: false });
   }
@@ -48,7 +47,6 @@ export const listBookingsHandler = async (context: Context) => {
     return context.json({ success: false });
   }
   const bookings = await bookingsRepo.listBookings(userId);
-  console.log("list ::" + bookings);
   return context.json({ success: true, bookings });
 
 }
@@ -59,5 +57,14 @@ export const pdfGeneratorHandler = async(context: Context) => {
 
   const booking = await bookingsRepo.getPdf(bookingId)
   return context.json({ success: true, booking })
+}
+
+export const updateStatusHandler = async (context: Context) => {
+  const bookingId = context.req.param("id");
+  const bookingsRepo = context.get("bookingsRepo");
+
+ const res = await bookingsRepo.updateBookingStatus(bookingId);
+  
+ return context.json({ success: true });
 }
 

@@ -22,11 +22,9 @@ export class SearchHotelsRepo {
   async searchHotel(searchedcity: string) {
     const cachedHotel = await getValue(searchedcity);
     if (cachedHotel) {
-      console.log("Cached Hit");
       return JSON.parse(cachedHotel)
     };
 
-    console.log("Cached Miss");
     const hotel = await this.#hotels.find({ city: searchedcity }).toArray()
     setValueToRedis(searchedcity, JSON.stringify(hotel))
     return hotel;

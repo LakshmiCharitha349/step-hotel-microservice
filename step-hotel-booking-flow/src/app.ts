@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import {logger} from "hono/logger";
 import { BookingsRepo } from "./repository/bookingsRepo.ts";
-import { bookingHandler, listBookingsHandler, pdfGeneratorHandler } from "./handlers/bookingHandler.ts";
+import { bookingHandler, listBookingsHandler, pdfGeneratorHandler, updateStatusHandler } from "./handlers/bookingHandler.ts";
 
 type HonoArgs = {
   "bookingsRepo" : BookingsRepo
@@ -20,6 +20,7 @@ export const createApp = (bookingsRepo:BookingsRepo) => {
   app.post("/api/bookings/", bookingHandler);
   app.get("/api/bookings/", listBookingsHandler);
   app.get("/api/bookings/:id/receipt.pdf", pdfGeneratorHandler);
+  app.put("/api/bookings/update-status/:id", updateStatusHandler);
 
   return app;
 } 
