@@ -1,7 +1,7 @@
 import {Hono} from "hono";
 import {logger} from "hono/logger";
 import { SearchHotelsRepo } from "./services/searchHotelRepo.ts";
-type HonoArgs = {searchHotels : SearchHotelsRepo}
+type HonoArgs = {"search-hotels-repo" : SearchHotelsRepo}
 
 export const createApp = (searchHotels : SearchHotelsRepo) => {
   const app = new Hono<{Variables : HonoArgs}>();
@@ -15,9 +15,10 @@ export const createApp = (searchHotels : SearchHotelsRepo) => {
   app.get("api/search/hotels" , async (c : Context) => {
     const hotelRepo = c.get("search-hotels-repo");
     const { city } = c.req.query();
-
+  
+    console.log(" coty ::" + city);
     const hotels = await hotelRepo.searchHotel(city);
-
+     console.log("hotels ::" + hotels);
     return c.json(hotels);
   })
 

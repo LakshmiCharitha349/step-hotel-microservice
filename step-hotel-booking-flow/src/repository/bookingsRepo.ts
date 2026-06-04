@@ -2,7 +2,7 @@ import { Db, ObjectId } from "mongodb";
 
 interface Bookings {
   userId: string,
-  hotel_id: string,
+  name: string,
   rooms: number
   reciept_status: string
 }
@@ -14,23 +14,23 @@ export class BookingsRepo {
     this.#bookings = db.collection<Bookings>("bookings");
   }
 
-  async bookHotel(userId: string, hotel_id: string, rooms: number) {
-    const newBooking = { userId, hotel_id, rooms, reciept_status: "Pending" };
-    const search_url = Deno.env.get("SEARCH_URL");
+  async bookHotel(userId: string, name: string, rooms: number) {
+    const newBooking = { userId, name, rooms, reciept_status: "Pending" };
+    // const search_url = Deno.env.get("SEARCH_URL");
 
-    const res = await fetch(`${search_url}`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify({ rooms, hotel_id }),
-      credentials: "include"
-    }).then(res => res.json());
+    // const res = await fetch(`${search_url}`, {
+    //   method: "POST",
+    //   headers: { "content-type": "application/json" },
+    //   body: JSON.stringify({ rooms, hotel_id }),
+    //   credentials: "include"
+    // }).then(res => res.json());
 
-    if (!res) {
-      return null;
-    }
+    // if (!res) {
+    //   return null;
+    // }
 
-    const { insertedId } = await this.#bookings.insertOne(newBooking);
-    return insertedId;
+    const { acknowledged } = await this.#bookings.insertOne(newBooking);
+    return acknowledged;
   }
 
 

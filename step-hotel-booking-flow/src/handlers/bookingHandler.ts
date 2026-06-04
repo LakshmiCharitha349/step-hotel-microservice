@@ -20,7 +20,6 @@ const getUserId = async (context: Context) => {
 
 }
 
-
 export const bookingHandler = async (context: Context) => {
   const req = await context.req.json();
   const bookingsRepo = context.get("bookingsRepo");
@@ -30,7 +29,7 @@ export const bookingHandler = async (context: Context) => {
     return context.json({ success: false });
   }
 
-  const id = await bookingsRepo.bookHotel(userId, req.hotel_id, req.rooms); 
+  const id = await bookingsRepo.bookHotel(userId, req.name, req.rooms); 
   if (!id) {
     return context.json({ success: false });
   }
